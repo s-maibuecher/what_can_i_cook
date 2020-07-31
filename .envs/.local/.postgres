@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=what_can_i_cook
+POSTGRES_USER=xDHUvowBqHmoBYYNaxPWTLWOkDnPXGBH
+POSTGRES_PASSWORD=P1OdTMKeqvWfdKMBAGesHgZpnZ9QFAIzi3EQRETRF7G5SMsc1CKIyf9CCkWkmtSv
