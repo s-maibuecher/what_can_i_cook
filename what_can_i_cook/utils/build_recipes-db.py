@@ -1,3 +1,8 @@
+'''
+Little Helper File to seed the Mongo Atlas DB with recipe data:
+Have to run only once.
+'''
+
 from pymongo import MongoClient
 import json, os
 
@@ -25,11 +30,4 @@ for recipe in recipes_files:
 
     result = recipes.insert_many(items, ordered=False)
 
-    print(dir(result))
-    print('###')
 
-'''
-todo in die requirements: pymongo und dnspython
-
-
-'''

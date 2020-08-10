@@ -34,11 +34,7 @@ docker-compose -f local.yml run --rm django python manage.py migrate
 Viele Infos, Logs, usw gibt dann auch im Docker Dashboard auszulesen
 
 
-
-und dann noch die richtigen pycharm einstellungen
-
-https://joshuahunter.com/posts/using-cookiecutter-to-jumpstart-a-django-project-on-windows-with-pycharm/#final-pycharm-settings
-
+unter /backups ist ein Datenbank Backup mit dem Stand der frisch gezogenen Mongo Daten
 
 ## Bisheriges Vorgehen:
 
@@ -83,3 +79,15 @@ wie resette ich die Datenbank? Drop Table Befehl? Hier im Docker-compose oder Do
 wie lasse ich pylint oder flake8 laufen?
 
 der pytest Befehl oben klappt, das kann ich mit dokumentieren 
+
+
+todo nach dem compose build muss noch ein migrate what_can_i_cook erfolgen, aber das kann ja auch ins Dockerfile mit
+aufgenommen werden
+
+
+shipped=False
+Wasser* Öl* Olivenöl* Butter* Salz* Pfeffer* Zucker* Essig* Milch* Ei* Mehl* Backpulver Rotweinessig Gemüsebrühe* Weißweinessig* heißes Wasser* Gemüsebrühpaste* Honig* Hühnerbrühe* (Oliven-)Öl* Balsamicoessig* Balsamico-Essig Meersalz Eier Garflüssigkeit Balsamico-Essig, hell Rinderbrühe* Senf Pfefferkörner Geflügelbrühe Brühe Weißwein Wasser (mit Kohlensäure) natives Olivenöl extra Apfelessig
+
+
+Zutaten mit Stern markiert:
+'Wasser* Öl* Olivenöl* Butter* Salz* Pfeffer* Zucker* Essig* Milch* Ei* Mehl* Gemüsebrühe* Weißweinessig* heißes Wasser* Gemüsebrühpaste* Honig* Hühnerbrühe* (Oliven-)Öl* Balsamicoessig* Rinderbrühe*'

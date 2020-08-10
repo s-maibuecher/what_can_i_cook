@@ -17,6 +17,7 @@ urlpatterns = [
     path("users/", include("what_can_i_cook.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("app/", include('what_can_i_cook.urls', namespace='wcic'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS

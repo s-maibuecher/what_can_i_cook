@@ -1,3 +1,7 @@
+'''
+Populates the Django DB with all Ingredients and Recipes. Get called from the migration files.
+'''
+
 from pymongo import MongoClient
 from what_can_i_cook.models import Recipe, Ingredient
 
@@ -10,25 +14,38 @@ recipes = db.recipes
 
 
 def main():
-    # Zutaten finden:
-    rec_ings = recipes.find({}, {"ingredients.id": 1, "ingredients.name": 1,
+    '''
+    Populates the Django DB with all Ingredients and Recipes
+    :return: None
+    '''
+
+    ###
+    ### 1. Save Ingredients:
+    ###
+
+    # Find ingriedients in Mongo DB:
+    found_ing_dicts = recipes.find({}, {"ingredients.id": 1, "ingredients.name": 1,
                                  "ingredients.imagePath": 1, "ingredients.shipped": 1, "_id": 0})
 
-    # gefundene Zutaten abspeichern
-    for ings in rec_ings:
-        for ri in ings["ingredients"]:
+    # Save found ings in model instances:
+    for all_ings_for_one_recipe in found_ing_dicts:
+        for single_ing_object in all_ings_for_one_recipe["ingredients"]:
             obj, created = Ingredient.objects.get_or_create(
-                id=ri['id'],
+                id=single_ing_object['id'],
                 defaults={
-                    'name': ri['name'],
-                    'shipped': ri['shipped'],
+                    'name': single_ing_object['name'],
+                    'shipped': single_ing_object['shipped'],
                 }
             )
-            if created and ri['imagePath']:
-                obj.imagePath = ri['imagePath']
+            if created and single_ing_object['imagePath']:
+                obj.imagePath = single_ing_object['imagePath']
                 obj.save()
 
-    # Rezepte finden und speichern:
+    ###
+    ### 2. Save Recipes:
+    ###
+
+    # Find and save recipes in recipe model instances:
     for r in recipes.find({}, {"name": 1, "description": 1, "headline": 1, "websiteUrl": 1,
                                "imagePath": 1, "ingredients.id": 1}):
         recipe, created = Recipe.objects.get_or_create(
@@ -42,8 +59,11 @@ def main():
             if r["headline"]:
                 recipe.headline = r["headline"]
 
-            # Rezete / Zutaten Beziehungen:
-            for i in r["ingredients"]:
-                recipe.ingredients.add(i['id'])
+            ###
+            ### 3. Build Recepe / Ingredients relationship:
+            ###
+
+            for ings in r["ingredients"]:
+                recipe.ingredients.add(ings['id'])
 
             recipe.save()

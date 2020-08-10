@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load filters %}
+
+
+{% block title %}Results of Ingridients Search {% endblock %}
+
+{% block content %}
+  <h3>Results</h3>
+
+  <div class="row">
+    {% for rec in object_list %}
+      <div class="col-md-4">
+      <div>{% if rec.no_of_common_ings is rec.ing_counter %}
+      <b>Hurra, es wurde ein Rezept gefunden!!!</b>
+        {% else %} Schade, kein Match. Aber bei diesem Rezept fehlen nur noch {{ rec.ing_counter|subtract:rec.no_of_common_ings }}
+        Zutaten! Vielleicht kann dein Nachbar weiterhelfen? 😊
+      {% endif %} </div>
+        <div class="thumbnail">
+          <a href="{{ rec.websiteUrl }}">
+            <img src="{{ rec.image_url }}" alt="Lights" style="width:100%">
+            <div class="caption">
+              <p>{{ rec.name }}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+

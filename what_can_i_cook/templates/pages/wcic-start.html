@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Find the right thing to cook with your stuff {% endblock %}
+
+{% block media %}{{ form.media.css }}{% endblock %}
+
+{% block content %}
+  <p><img src="{% static 'images/wordcloud.JPG' %}" alt="Wordcloud mit Zutaten"></p>
+  {#  todo tagcloud https://www.jasondavies.com/wordcloud/ #}
+  <form method="get" id="ing-form" action="{% url 'wcic:wcic-results' %}">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Passende Rezepte suchen"/>
+  </form>
+{% endblock %}
+
+{% block media_js %}{{ form.media.js }}{% endblock %}
+
