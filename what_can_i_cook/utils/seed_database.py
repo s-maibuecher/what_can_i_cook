@@ -23,7 +23,7 @@ def main():
     ### 1. Save Ingredients:
     ###
 
-    # Find ingriedients in Mongo DB:
+    # Find ingredients in Mongo DB:
     found_ing_dicts = recipes.find({}, {"ingredients.id": 1, "ingredients.name": 1,
                                  "ingredients.imagePath": 1, "ingredients.shipped": 1, "_id": 0})
 

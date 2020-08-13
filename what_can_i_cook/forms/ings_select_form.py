@@ -8,6 +8,8 @@ class MyIngModelChoiceField(forms.ModelMultipleChoiceField):
 
 
 class ChooseIngForm(forms.Form):
+
+    # todo HIER WEITER: Die Zutaten Gruppen verwenden
     ing_form = MyIngModelChoiceField(queryset=Ingredient.objects.all().filter(shipped=True))
 
     def __init__(self, *args, **kwargs):

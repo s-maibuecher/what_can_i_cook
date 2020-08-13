@@ -10,6 +10,8 @@ class Ingredient(models.Model):
 
     name = models.CharField(max_length=100)
 
+    group = models.CharField(max_length=100, blank=True)
+
     imagePath = models.CharField(max_length=100)
 
     shipped = models.BooleanField()

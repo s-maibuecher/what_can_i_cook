@@ -9,4 +9,4 @@ class RecipeAdmin(admin.ModelAdmin):
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     search_fields = ('id', 'name')
-    fields = ('name', 'id', 'imagePath', 'shipped')
+    fields = ('name', 'id', 'imagePath', 'group', 'shipped')

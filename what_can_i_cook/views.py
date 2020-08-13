@@ -32,7 +32,7 @@ class WCICResultView(ListView):
         _ing_id_list = self.request.GET.getlist('ing_form')
 
         # build Queryset:
-        ing_queryset = Ingredient.objects.filter(id__in=_ing_id_list)
+        # ing_queryset = Ingredient.objects.filter(id__in=_ing_id_list)
 
         annotated_recipe_queryset = Recipe.valuable_recipes.annotate(
             no_of_common_ings=Count(Case(When(
