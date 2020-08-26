@@ -7,7 +7,7 @@
 
 {% block content %}
   <p><img src="{% static 'images/wordcloud.JPG' %}" alt="Wordcloud mit Zutaten"></p>
-  {#  todo tagcloud https://www.jasondavies.com/wordcloud/ #}
+  <p>Tipp: Versuche nach Gruppenbegriffen zu suchen, um mehr Treffer zur erhalten. Z.B. Pilze statt Champions.</p>
   <form method="get" id="ing-form" action="{% url 'wcic:wcic-results' %}">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Passende Rezepte suchen"/>

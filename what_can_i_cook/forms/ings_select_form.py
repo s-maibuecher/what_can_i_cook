@@ -1,5 +1,6 @@
 from django import forms
-from what_can_i_cook.models import Ingredient
+
+from what_can_i_cook.models import IngredientGroup
 
 
 class MyIngModelChoiceField(forms.ModelMultipleChoiceField):
@@ -9,8 +10,7 @@ class MyIngModelChoiceField(forms.ModelMultipleChoiceField):
 
 class ChooseIngForm(forms.Form):
 
-    # todo HIER WEITER: Die Zutaten Gruppen verwenden
-    ing_form = MyIngModelChoiceField(queryset=Ingredient.objects.all().filter(shipped=True))
+    ing_form = MyIngModelChoiceField(queryset=IngredientGroup.objects.all())
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

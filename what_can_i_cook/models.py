@@ -2,6 +2,12 @@ from django.db import models
 from django.db.models import Count
 
 
+class IngredientGroup(models.Model):
+    id = models.CharField(primary_key=True, max_length=24)
+
+    name = models.CharField(max_length=100)
+
+
 class Ingredient(models.Model):
     '''
     Strongly simplified model of hellofresh ingredients
@@ -10,7 +16,7 @@ class Ingredient(models.Model):
 
     name = models.CharField(max_length=100)
 
-    group = models.CharField(max_length=100, blank=True)
+    group = models.ForeignKey('IngredientGroup', null=True, on_delete=models.CASCADE)
 
     imagePath = models.CharField(max_length=100)
 

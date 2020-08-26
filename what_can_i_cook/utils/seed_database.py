@@ -1,9 +1,9 @@
-'''
+"""
 Populates the Django DB with all Ingredients and Recipes. Get called from the migration files.
-'''
+"""
 
 from pymongo import MongoClient
-from what_can_i_cook.models import Recipe, Ingredient
+from what_can_i_cook.models import Recipe, Ingredient, IngredientGroup
 
 client = MongoClient(
     'mongodb+srv://m001-student:m001-mongodb-basics@sandbox.wqtbk.mongodb.net/video?retryWrites=true&w=majority')
@@ -14,56 +14,65 @@ recipes = db.recipes
 
 
 def main():
-    '''
+    """
     Populates the Django DB with all Ingredients and Recipes
     :return: None
-    '''
+    """
 
-    ###
-    ### 1. Save Ingredients:
-    ###
+    all_recipes = recipes.find({}, {
+        "name": 1, "description": 1, "headline": 1, "websiteUrl": 1, "imagePath": 1,
+        "ingredients.id": 1, "ingredients.name": 1, "ingredients.family.name": 1, "ingredients.family.id": 1,
+        "ingredients.imagePath": 1, "ingredients.shipped": 1})
 
-    # Find ingredients in Mongo DB:
-    found_ing_dicts = recipes.find({}, {"ingredients.id": 1, "ingredients.name": 1,
-                                 "ingredients.imagePath": 1, "ingredients.shipped": 1, "_id": 0})
+    for recipe_item in all_recipes:
 
-    # Save found ings in model instances:
-    for all_ings_for_one_recipe in found_ing_dicts:
-        for single_ing_object in all_ings_for_one_recipe["ingredients"]:
-            obj, created = Ingredient.objects.get_or_create(
-                id=single_ing_object['id'],
-                defaults={
-                    'name': single_ing_object['name'],
-                    'shipped': single_ing_object['shipped'],
-                }
-            )
-            if created and single_ing_object['imagePath']:
-                obj.imagePath = single_ing_object['imagePath']
-                obj.save()
-
-    ###
-    ### 2. Save Recipes:
-    ###
-
-    # Find and save recipes in recipe model instances:
-    for r in recipes.find({}, {"name": 1, "description": 1, "headline": 1, "websiteUrl": 1,
-                               "imagePath": 1, "ingredients.id": 1}):
+        ###
+        ### 1. Save Recipes:
+        ###
         recipe, created = Recipe.objects.get_or_create(
-            id=r["_id"],
-            defaults={"name": r["name"], "description": r["description"],
-                      "websiteUrl": r["websiteUrl"], "imagePath": r["imagePath"], })
+            id=recipe_item["_id"],
+
+            defaults={"name": recipe_item["name"], "description": recipe_item["description"],
+                      "websiteUrl": recipe_item["websiteUrl"], "imagePath": recipe_item["imagePath"], })
         if not created:
             print(f"Werk {recipe} gibt es wohl doppelt.")
 
-        else:
-            if r["headline"]:
-                recipe.headline = r["headline"]
+        ###
+        ### 2. Save Ingredients:
+        ###
+
+        for ing in recipe_item['ingredients']:
+            ing_obj, ing_created = Ingredient.objects.get_or_create(
+                id=ing['id'],
+                defaults={
+                    'name': ing['name'],
+                    'shipped': ing['shipped'],
+                }
+            )
+            if ing_created and ing['imagePath']:
+                ing_obj.imagePath = ing['imagePath']
+                ing_obj.save()
 
             ###
-            ### 3. Build Recepe / Ingredients relationship:
+            ### 3. Save IngredientGroup:
             ###
 
-            for ings in r["ingredients"]:
-                recipe.ingredients.add(ings['id'])
+            if ing_created and 'family' in ing:
+                ig, ig_created = IngredientGroup.objects.get_or_create(
+                    id=ing['family']['id'],
+                    defaults={
+                        'name': ing['family']['name'],
+                    }
+                )
 
-            recipe.save()
+                # Build Ingredient <-> IngredientGroup Relationship
+                ig.ingredient_set.add(ing_obj)
+                ig.save()
+
+            ###
+            ### 4. Build Recepe / Ingredients relationship:
+            ###
+
+            if created:
+                recipe.ingredients.add(ing_obj)
+                recipe.save()
