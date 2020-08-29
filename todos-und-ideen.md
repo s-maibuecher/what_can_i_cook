@@ -69,8 +69,7 @@ dann alles neu und migration bauen
 
 dann daten darstellen
 
-
-
+hatte überlegt, das select Feld gemeinsam aus zutaten und Zutatengruppen zu füllen, aber ich glaube darauf kommt es eigentlich gar nicht an in einer Portfolio App
 
 
 wie resette ich die Datenbank? Drop Table Befehl? Hier im Docker-compose oder Dockerfile nochmal die richtige Zeile laufen lassen?

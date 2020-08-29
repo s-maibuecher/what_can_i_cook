@@ -11,3 +11,17 @@
   background-color: #f2dede;
   border-color: #eed3d7;
 }
+
+.jumbotron {
+  padding-top: 30px;
+  background-color: white;
+  "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+}
+
+h1{
+  margin-bottom: 2rem;
+}
+
+form#ing-form {
+    padding-top: 0.5rem;
+}

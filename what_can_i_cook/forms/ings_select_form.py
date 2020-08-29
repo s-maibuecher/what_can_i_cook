@@ -15,7 +15,7 @@ class ChooseIngForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['ing_form'].widget.attrs.update({'id': 'choose-ing-form'})
-        self.fields['ing_form'].label = "Welche Zutaten hast du vorhanden?"
+        self.fields['ing_form'].label = ""
 
 
     class Media:

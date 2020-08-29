@@ -6,12 +6,19 @@
 {% block media %}{{ form.media.css }}{% endblock %}
 
 {% block content %}
-  <p><img src="{% static 'images/wordcloud.JPG' %}" alt="Wordcloud mit Zutaten"></p>
-  <p>Tipp: Versuche nach Gruppenbegriffen zu suchen, um mehr Treffer zur erhalten. Z.B. Pilze statt Champions.</p>
-  <form method="get" id="ing-form" action="{% url 'wcic:wcic-results' %}">{% csrf_token %}
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1>What can I Cook???</h1>
+      <p class="lead text-muted">Tipp: Versuche nach Gruppenbegriffen zu suchen, um mehr Treffer zur erhalten. Z.B. Pilze statt Champions.</p>
+
+        <form method="get" id="ing-form" action="{% url 'wcic:wcic-results' %}">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Passende Rezepte suchen"/>
+    <input type="submit" class="btn btn-secondary my-2" value="Go!"/>
   </form>
+
+    </div>
+  </section>
+
 {% endblock %}
 
 {% block media_js %}{{ form.media.js }}{% endblock %}
